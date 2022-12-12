@@ -1,4 +1,6 @@
-﻿using Livraria.Domain.Base.Interfaces;
+﻿using AspNetCore.IQueryable.Extensions.Filter;
+using Livraria.Domain.Base.Entities;
+using Livraria.Domain.Base.Interfaces;
 using Livraria.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -14,14 +16,26 @@ namespace Livraria.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<IPagedResult<T>> GetAsync(Expression<Func<T, bool>> criteria, int page, int maxResults = 10)
+        public async Task<IPagedResult<T>> GetAsync(BaseFilter filter)
         {
-            throw new NotImplementedException();
+            int count = (filter.Page - 1) * filter.MaxResults;
+
+            IQueryable<T> query = _dbContext.Set<T>().AsQueryable().Filter(filter);
+            return new PagedResult<T>(await query.CountAsync(), await query.Skip(count).Take(filter.MaxResults).Cast<T>().ToListAsync());
         }
 
-        public async Task<IPagedResult<T>> GetByIdAsync(Guid Id)
+        public async Task<IPagedResult<T>> GetAsync(Expression<Func<T, bool>> criteria, int page = 1, int maxResults = 10)
         {
-            throw new NotImplementedException();
+            page = page == 0 ? 1 : page;
+            int count = (page - 1) * maxResults;
+
+            IQueryable<T> query = _dbContext.Set<T>().AsQueryable().Where(criteria);
+            return new PagedResult<T>(await query.CountAsync(), await query.Skip(count).Take(maxResults).Cast<T>().ToListAsync());
+        }
+
+        public async Task<T?> GetByIdAsync(Guid Id)
+        {
+            return await _dbContext.FindAsync<T>(Id);
         }
 
         public async Task AddAsync(T entity)
@@ -48,5 +62,7 @@ namespace Livraria.Infrastructure.Repositories
             _dbContext.Entry(entity).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
         }
+
+
     }
 }

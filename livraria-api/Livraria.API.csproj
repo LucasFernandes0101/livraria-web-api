@@ -20,8 +20,6 @@
 
   <ItemGroup>
     <Folder Include="v1\Configs\Mappers\" />
-    <Folder Include="v1\Models\Responses\" />
-    <Folder Include="v1\Models\Requests\" />
   </ItemGroup>
 
   <ItemGroup>
