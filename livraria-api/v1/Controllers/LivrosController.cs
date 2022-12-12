@@ -55,5 +55,25 @@ namespace livraria_api.v1.Controllers
 
             return Ok(response);
         }
+
+        [HttpPut]
+        public async Task<ActionResult> PutAsync([FromBody] LivroViewModel viewModel)
+        {
+            var response = new Helpers.HttpResponse() { Success = true };
+
+            try
+            {
+                await _livroService.PutAsync(viewModel);
+                response.Message = "Livro atualizado com sucesso!";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = "Erro ao atualizar livro!";
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
     }
 }

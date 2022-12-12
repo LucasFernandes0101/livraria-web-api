@@ -31,5 +31,12 @@ namespace Livraria.Application.Services
 
             await _livroRepository.AddAsync(model);
         }
+
+        public async Task PutAsync(LivroViewModel viewModel)
+        {
+            var model = _mapper.Map<Livro>(viewModel);
+
+            await _livroRepository.UpdateAsync(model);
+        }
     }
 }

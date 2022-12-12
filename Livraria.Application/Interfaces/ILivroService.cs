@@ -7,6 +7,7 @@ namespace Livraria.Application.Interfaces
     public interface ILivroService
     {
         Task PostAsync(LivroViewModel viewModel);
+        Task PutAsync(LivroViewModel viewModel);
         Task<List<LivroViewModel>> GetAsync(GetLivrosFilter filter);
     }
 }

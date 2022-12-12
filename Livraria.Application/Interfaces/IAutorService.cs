@@ -6,6 +6,7 @@ namespace Livraria.Application.Interfaces
     public interface IAutorService
     {
         Task PostAsync(AutorViewModel viewModel);
+        Task PutAsync(AutorViewModel viewModel);
         Task<List<AutorViewModel>> GetAsync(GetAutoresFilter filter);
     }
 }
