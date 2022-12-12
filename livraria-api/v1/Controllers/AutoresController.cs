@@ -8,28 +8,28 @@ namespace livraria_api.v1.Controllers
     [ApiController]
     [Route("api/v{api-version:apiVersion}/[controller]")]
     [ApiVersion("1.0")]
-    public class LivrosController : ControllerBase
+    public class AutoresController : ControllerBase
     {
-        private readonly ILivroService _livroService;
-        public LivrosController(ILivroService livroService)
+        private readonly IAutorService _autorService;
+        public AutoresController(IAutorService autorService)
         {
-            _livroService = livroService;
+            _autorService = autorService;
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAsync([FromQuery] GetLivrosFilter request)
+        public async Task<ActionResult> GetAsync([FromQuery] GetAutoresFilter request)
         {
             var response = new Helpers.HttpResponse() { Success = true };
 
             try
             {
-                response.Content = await _livroService.GetAsync(request);
-                response.Message = "Livros retornados com sucesso!";
+                response.Content = await _autorService.GetAsync(request);
+                response.Message = "Autores retornados com sucesso!";
             }
             catch (Exception ex)
             {
                 response.Success = false;
-                response.Message = "Erro ao obter livros!";
+                response.Message = "Erro ao obter autores!";
                 return BadRequest(response);
             }
 
@@ -37,19 +37,19 @@ namespace livraria_api.v1.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostAsync([FromBody] LivroViewModel viewModel)
+        public async Task<ActionResult> PostAsync([FromBody] AutorViewModel viewModel)
         {
             var response = new Helpers.HttpResponse() { Success = true };
 
             try
             {
-                await _livroService.PostAsync(viewModel);
-                response.Message = "Livro cadastrado com sucesso!";
+                await _autorService.PostAsync(viewModel);
+                response.Message = "Autor cadastrado com sucesso!";
             }
             catch (Exception ex)
             {
                 response.Success = false;
-                response.Message = "Erro ao cadastrar livro!";
+                response.Message = "Erro ao cadastrar autor!";
                 return BadRequest(response);
             }
 

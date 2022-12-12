@@ -1,4 +1,6 @@
-﻿using Livraria.Application.Interfaces;
+﻿using AutoMapper;
+using Livraria.Application.Interfaces;
+using Livraria.Domain.Base.Entities;
 using Livraria.Domain.Entities;
 using Livraria.Domain.Filters;
 using Livraria.Domain.Interfaces;
@@ -9,19 +11,25 @@ namespace Livraria.Application.Services
     public class LivroService : ILivroService
     {
         private readonly ILivroRepository _livroRepository;
-        public LivroService(ILivroRepository livroRepository)
+        private readonly IMapper _mapper;
+        public LivroService(ILivroRepository livroRepository, IMapper mapper)
         {
             _livroRepository = livroRepository;
+            _mapper = mapper;
         }
 
-        public async Task<LivroViewModel> GetAsync(GetLivrosFilter filter)
+        public async Task<List<LivroViewModel>> GetAsync(GetLivrosFilter filter)
         {
             var pagedResult = await _livroRepository.GetAsync(filter);
+
+            return _mapper.Map<List<LivroViewModel>>(pagedResult.Items);
         }
 
-        public async Task PostAsync(Livro livro)
+        public async Task PostAsync(LivroViewModel viewModel)
         {
-            await _livroRepository.AddAsync(livro);
+            var model = _mapper.Map<Livro>(viewModel);
+
+            await _livroRepository.AddAsync(model);
         }
     }
 }
