@@ -1,4 +1,5 @@
 using Livraria.Application;
+using livraria_api.v1.Middlewares;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.OpenApi.Models;
@@ -45,6 +46,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware(typeof(ErrorMiddleware));
 
 app.UseAuthorization();
 

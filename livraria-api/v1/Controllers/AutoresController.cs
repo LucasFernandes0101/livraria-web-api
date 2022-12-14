@@ -19,19 +19,9 @@ namespace livraria_api.v1.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAsync([FromQuery] GetAutoresFilter request)
         {
-            var response = new Helpers.HttpResponse() { Success = true };
+            var response = new Helpers.HttpResponse();
 
-            try
-            {
-                response.Content = await _autorService.GetAsync(request);
-                response.Message = "Autores retornados com sucesso!";
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = "Erro ao obter autores!";
-                return BadRequest(response);
-            }
+            response.Content = await _autorService.GetAsync(request);
 
             return Ok(response);
         }
@@ -39,19 +29,9 @@ namespace livraria_api.v1.Controllers
         [HttpPost]
         public async Task<ActionResult> PostAsync([FromBody] AutorViewModel viewModel)
         {
-            var response = new Helpers.HttpResponse() { Success = true };
+            var response = new Helpers.HttpResponse();
 
-            try
-            {
-                await _autorService.PostAsync(viewModel);
-                response.Message = "Autor cadastrado com sucesso!";
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = "Erro ao cadastrar autor!";
-                return BadRequest(response);
-            }
+            await _autorService.PostAsync(viewModel);
 
             return Ok(response);
         }
@@ -59,19 +39,9 @@ namespace livraria_api.v1.Controllers
         [HttpPut]
         public async Task<ActionResult> PutAsync([FromBody] AutorViewModel viewModel)
         {
-            var response = new Helpers.HttpResponse() { Success = true };
+            var response = new Helpers.HttpResponse();
 
-            try
-            {
-                await _autorService.PutAsync(viewModel);
-                response.Message = "Autor atualizado com sucesso!";
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = "Erro ao atualizar autor!";
-                return BadRequest(response);
-            }
+            await _autorService.PutAsync(viewModel);
 
             return Ok(response);
         }
