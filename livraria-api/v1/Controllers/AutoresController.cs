@@ -22,6 +22,7 @@ namespace livraria_api.v1.Controllers
             var response = new Helpers.HttpResponse();
 
             response.Content = await _autorService.GetAsync(request);
+            response.Message = "Autores retornados com sucesso!";
 
             return Ok(response);
         }
@@ -32,6 +33,7 @@ namespace livraria_api.v1.Controllers
             var response = new Helpers.HttpResponse();
 
             await _autorService.PostAsync(viewModel);
+            response.Message = "Autor cadastrado com sucesso!";
 
             return Ok(response);
         }
@@ -42,6 +44,7 @@ namespace livraria_api.v1.Controllers
             var response = new Helpers.HttpResponse();
 
             await _autorService.PutAsync(viewModel);
+            response.Message = "Autor editado com sucesso!";
 
             return Ok(response);
         }

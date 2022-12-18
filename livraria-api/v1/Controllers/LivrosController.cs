@@ -1,4 +1,5 @@
 ﻿using Livraria.Application.Interfaces;
+using Livraria.Domain.Exceptions;
 using Livraria.Domain.Filters;
 using Livraria.Domain.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,7 @@ namespace livraria_api.v1.Controllers
             var response = new Helpers.HttpResponse();
 
             response.Content = await _livroService.GetAsync(request);
+            response.Message = "Livros retornados com sucesso!";
 
             return Ok(response);
         }
@@ -32,6 +34,7 @@ namespace livraria_api.v1.Controllers
             var response = new Helpers.HttpResponse();
 
             await _livroService.PostAsync(viewModel);
+            response.Message = "Livro cadastrado com sucesso!";
 
             return Ok(response);
         }
@@ -42,6 +45,7 @@ namespace livraria_api.v1.Controllers
             var response = new Helpers.HttpResponse();
 
             await _livroService.PutAsync(viewModel);
+            response.Message = "Livro editado com sucesso!";
 
             return Ok(response);
         }

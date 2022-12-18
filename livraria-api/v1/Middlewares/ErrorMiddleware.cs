@@ -1,6 +1,7 @@
-﻿using livraria_api.v1.Helpers;
+﻿using Livraria.Domain.Base.Entities;
+using Livraria.Domain.Exceptions;
+using livraria_api.v1.Helpers;
 using Newtonsoft.Json;
-using System.Net;
 
 namespace livraria_api.v1.Middlewares
 {
@@ -27,27 +28,29 @@ namespace livraria_api.v1.Middlewares
 
         private Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
-            //Persistir LOG de erro, utilizando o TraceId
+            //TODO: Persistir LOG de erro, utilizando o ErrorId
 
-            ErrorResponse errorResponseVm;
+            // Mensagem de erro utilizada em ambiente produtivo, caso a exceção não for customizada
+            string errorMessage = ex is BaseException ? ex.Message : "Ocorreu um erro! :(";
+
+            var errorResponseVm = new ErrorResponse();
 
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" ||
                 Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Homologation"
                 )
             {
-                errorResponseVm = new ErrorResponse(HttpStatusCode.InternalServerError.ToString(),
-                                                      $"{ex.Message} {ex?.InnerException?.Message}");
+                errorResponseVm = new ErrorResponse($"{ex.Message} {ex?.InnerException?.Message}");
             }
             else
             {
-                errorResponseVm = new ErrorResponse(HttpStatusCode.InternalServerError.ToString(),
-                                                      "Esse é um erro padronizado para produção.");
+                errorResponseVm = new ErrorResponse(errorMessage);
             }
 
             var response = new Helpers.HttpResponse();
             response.Errors = errorResponseVm;
+            response.Message = errorMessage;
 
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            context.Response.StatusCode = (int)ExceptionStatusCodes.GetExceptionStatusCode(ex ?? new Exception());
 
             var result = JsonConvert.SerializeObject(response);
             context.Response.ContentType = "application/json";
