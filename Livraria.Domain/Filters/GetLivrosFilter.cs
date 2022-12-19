@@ -7,5 +7,6 @@ namespace Livraria.Domain.Filters
         public string? Titulo { get; set; }
         public int? QtdPaginas { get; set; }
         public Guid? AutorId { get; set; }
+        public decimal? Preco { get; set; }
     }
 }

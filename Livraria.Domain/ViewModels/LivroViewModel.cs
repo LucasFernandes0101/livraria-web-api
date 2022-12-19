@@ -6,6 +6,7 @@
         public Guid AutorId { get; set; }
         public string? Titulo { get; set; }
         public int QtdPaginas { get; set; }
+        public decimal Preco { get; set; }
         public DateTime DataCadastro { get; set; }
     }
 }

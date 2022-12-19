@@ -4,9 +4,12 @@ using Livraria.Domain.Base.Entities;
 
 namespace Livraria.Domain.Filters
 {
-    public class GetAutoresFilter : BaseFilter
+    public class GetPromocaoFilter : BaseFilter
     {
         [QueryOperator(Operator = WhereOperator.Contains)]
-        public string? Nome { get; set; }
+        public string? Titulo { get; set; }
+        [QueryOperator(Operator = WhereOperator.Contains)]
+        public string? Descricao { get; set; }
+        public decimal? Preco { get; set; }
     }
 }
