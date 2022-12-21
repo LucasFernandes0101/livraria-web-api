@@ -7,7 +7,8 @@ namespace Livraria.Domain.Exceptions
         private static Dictionary<Type, HttpStatusCode> exceptionsStatusCodes = new Dictionary<Type, HttpStatusCode>
         {
             {typeof(BadRequestException), HttpStatusCode.BadRequest},
-            {typeof(NotFoundException), HttpStatusCode.NotFound}
+            {typeof(NotFoundException), HttpStatusCode.NotFound},
+            {typeof(RabbitMQCreateConnectionException), HttpStatusCode.InternalServerError}
         };
 
         public static HttpStatusCode GetExceptionStatusCode(Exception exception)

@@ -5,7 +5,7 @@ using Livraria.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Livraria.Infrastructure.Repositories
+namespace Livraria.Infrastructure.Repositories.SqlServer
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class, IBaseEntity
     {

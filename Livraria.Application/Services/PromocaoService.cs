@@ -17,7 +17,7 @@ namespace Livraria.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<List<PromocaoViewModel>> GetAsync(GetPromocaoFilter filter)
+        public async Task<List<PromocaoViewModel>> GetAsync(GetPromocoesFilter filter)
         {
             var pagedResult = await _promocaoRepository.GetAsync(filter);
 
@@ -29,6 +29,9 @@ namespace Livraria.Application.Services
             var model = _mapper.Map<Promocao>(viewModel);
 
             await _promocaoRepository.AddAsync(model);
+
+            var messageModel = _mapper.Map<PromocaoViewModel>(viewModel);
+            await _promocaoRepository.PublishPromocaoInQueue(messageModel);
         }
 
         public async Task PutAsync(PromocaoViewModel viewModel)

@@ -4,7 +4,7 @@ using Livraria.Domain.Base.Entities;
 
 namespace Livraria.Domain.Filters
 {
-    public class GetPromocaoFilter : BaseFilter
+    public class GetPromocoesFilter : BaseFilter
     {
         [QueryOperator(Operator = WhereOperator.Contains)]
         public string? Titulo { get; set; }

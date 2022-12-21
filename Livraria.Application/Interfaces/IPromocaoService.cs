@@ -7,6 +7,6 @@ namespace Livraria.Application.Interfaces
     {
         Task PostAsync(PromocaoViewModel viewModel);
         Task PutAsync(PromocaoViewModel viewModel);
-        Task<List<PromocaoViewModel>> GetAsync(GetPromocaoFilter filter);
+        Task<List<PromocaoViewModel>> GetAsync(GetPromocoesFilter filter);
     }
 }

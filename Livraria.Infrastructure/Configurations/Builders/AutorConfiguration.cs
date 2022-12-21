@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Livraria.Infrastructure.Configurations
+namespace Livraria.Infrastructure.Configurations.Builders
 {
     public class AutorConfiguration : IEntityTypeConfiguration<Autor>
     {

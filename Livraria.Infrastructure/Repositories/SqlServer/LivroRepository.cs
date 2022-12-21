@@ -2,7 +2,7 @@
 using Livraria.Domain.Interfaces;
 using Livraria.Infrastructure.Contexts;
 
-namespace Livraria.Infrastructure.Repositories
+namespace Livraria.Infrastructure.Repositories.SqlServer
 {
     public class LivroRepository : BaseRepository<Livro>, ILivroRepository
     {

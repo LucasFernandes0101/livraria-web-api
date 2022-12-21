@@ -1,5 +1,4 @@
 ﻿using Livraria.Application.Interfaces;
-using Livraria.Domain.Exceptions;
 using Livraria.Domain.Filters;
 using Livraria.Domain.ViewModels;
 using Microsoft.AspNetCore.Mvc;
