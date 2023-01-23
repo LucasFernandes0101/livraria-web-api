@@ -5,10 +5,11 @@ using System.Text;
 
 namespace Livraria.Infrastructure.Repositories.RabbitMQ
 {
-    public class RabbitMQIntegration : IRabbitMQIntegration
+    public class RabbitMQIntegration : IRabbitMQIntegration, IDisposable
     {
         private readonly IConnectionFactory _connectionFactory;
         private readonly IModel _channel;
+        private readonly IConnection _connection;
         public RabbitMQIntegration()
         {
             _connectionFactory = new ConnectionFactory()
@@ -19,8 +20,14 @@ namespace Livraria.Infrastructure.Repositories.RabbitMQ
                 Password = RabbitMQConfig.ConnectionString.Password
             };
 
-            IConnection _connection = CreateConnection(_connectionFactory);
+            _connection = CreateConnection(_connectionFactory);
             _channel = _connection.CreateModel();
+        }
+
+        public void Dispose()
+        {
+            _channel.Close();
+            _connection.Close();
         }
 
         public void PublishMessage(string message, string queue)

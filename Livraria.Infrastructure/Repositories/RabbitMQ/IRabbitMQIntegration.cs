@@ -1,6 +1,8 @@
-﻿namespace Livraria.Infrastructure.Repositories.RabbitMQ
+﻿using System;
+
+namespace Livraria.Infrastructure.Repositories.RabbitMQ
 {
-    public interface IRabbitMQIntegration
+    public interface IRabbitMQIntegration : IDisposable
     {
         void PublishMessage(string message, string queue);
     }
