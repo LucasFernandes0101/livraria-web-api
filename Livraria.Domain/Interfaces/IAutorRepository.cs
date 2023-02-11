@@ -5,5 +5,6 @@ namespace Livraria.Domain.Interfaces
 {
     public interface IAutorRepository : IBaseRepository<Autor>
     {
+        Task<Autor?> GetByIdWithBooks(Guid id);
     }
 }

@@ -17,6 +17,13 @@ namespace Livraria.Application.Services
             _mapper = mapper;
         }
 
+        public async Task<Autor?> GetByIdWithBooks(Guid id)
+        {
+            var autor = await _autorRepository.GetByIdWithBooks(id);
+
+            return autor;
+        }
+
         public async Task<List<AutorViewModel>> GetAsync(GetAutoresFilter filter)
         {
             var pagedResult = await _autorRepository.GetAsync(filter);

@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using Livraria.Application.Interfaces;
+﻿using Livraria.Application.Interfaces;
 using Livraria.Application.Services;
-using Livraria.Domain.Base.Interfaces;
 using Livraria.Domain.Interfaces;
 using Livraria.Domain.Mapper;
 using Livraria.Infrastructure.Contexts;
@@ -10,6 +8,7 @@ using Livraria.Infrastructure.Repositories.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Livraria.Application
 {
@@ -26,13 +25,15 @@ namespace Livraria.Application
 
         private static void AddRepositories(this IServiceCollection service, IConfiguration configuration)
         {
-            service.AddDbContext<SqlDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("LivrariaDB")));
+            service.AddDbContext<SqlDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("LivrariaDB"))
+                .EnableSensitiveDataLogging(true)
+                .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole())));
 
             service.AddScoped<ILivroRepository, LivroRepository>();
             service.AddScoped<IAutorRepository, AutorRepository>();
             service.AddScoped<IPromocaoRepository, PromocaoRepository>();
 
-            service.AddTransient<IRabbitMQIntegration, RabbitMQIntegration>();
+            service.AddSingleton<IRabbitMQIntegration, RabbitMQIntegration>();
         }
 
         private static void AddServices(this IServiceCollection service)

@@ -17,6 +17,18 @@ namespace livraria_api.v1.Controllers
         }
 
         [HttpGet]
+        [Route("GetByIdWithBooks/{id}")]
+        public async Task<ActionResult> GetByIdWithBooksAsync(Guid id)
+        {
+            var response = new Helpers.HttpResponse();
+
+            response.Content = await _autorService.GetByIdWithBooks(id);
+            response.Message = "Aluno e livros retornados com sucesso!";
+
+            return Ok(response);
+        }
+
+        [HttpGet]
         public async Task<ActionResult> GetAsync([FromQuery] GetAutoresFilter request)
         {
             var response = new Helpers.HttpResponse();

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Livraria.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace Livraria.Infrastructure.Contexts
@@ -9,6 +10,10 @@ namespace Livraria.Infrastructure.Contexts
         {
             base.Database.EnsureCreated();
         }
+
+        public DbSet<Autor> Autores { get; set; }
+        public DbSet<Livro> Livros { get; set; }
+        public DbSet<Promocao> Promocoes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

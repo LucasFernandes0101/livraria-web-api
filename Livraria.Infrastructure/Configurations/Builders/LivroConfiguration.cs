@@ -15,6 +15,8 @@ namespace Livraria.Infrastructure.Configurations.Builders
                 .HasColumnType("varchar(100)");
             builder.Property(x => x.QtdPaginas)
                 .HasColumnType("smallint");
+            builder.Property(x => x.Preco)
+                .HasColumnType("decimal(10,2)");
 
             builder.HasOne(x => x.Autor)
                 .WithMany(x => x.Livros);
